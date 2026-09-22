@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Multiriesgos de Colombia — Frontend Comparativo de Cotizaciones
 
-## Getting Started
+Aplicación web desarrollada en **Next.js 14+ (App Router), TypeScript y Tailwind CSS** para la ingesta, análisis asistido por Inteligencia Artificial (**Google Gemini 3.6 Flash**) y consolidación automatizada de cotizaciones de seguros en documentos Word (.docx).
 
-First, run the development server:
+---
+
+## Características Principales
+
+* 📤 **Zona Drag & Drop:** Carga simultánea de múltiples cotizaciones en formato PDF o Word (`.docx`).
+* ⚡ **Seguimiento en Vivo:** Stepper animado que consulta periódicamente (`polling`) el progreso del análisis sin recargar la página.
+* 🛡️ **Indicador de Salud:** Monitoreo constante de la conectividad con el microservicio en Google Cloud Run.
+* 💾 **Historial Local:** Almacenamiento en `localStorage` de comparativos recientes para descargas rápidas posteriores.
+* 🎨 **Diseño Corporativo:** Estilizado profesional con la paleta de colores de Multiriesgos de Colombia (`#1F3864`).
+
+---
+
+## Requisitos Previos
+
+* **Node.js** v18+ (recomendado v20 o v24).
+* **NPM** o gestor de paquetes preferido.
+
+---
+
+## Configuración y Puesta en Marcha
+
+### 1. Variables de Entorno
+
+Crea o edita el archivo `.env.local` en la raíz de `frontend`:
+
+```env
+# Por defecto apunta al microservicio desplegado en Google Cloud Run:
+NEXT_PUBLIC_API_URL=https://comparativo-seguros-api-972862829792.us-central1.run.app
+
+# Si deseas conectar con tu backend local:
+# NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+### 2. Iniciar el Servidor de Desarrollo
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre tu navegador en:
+👉 **[http://localhost:3000](http://localhost:3000)**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Compilación para Producción
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm run start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Arquitectura de Carpetas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+frontend/
+├── src/
+│   ├── app/
+│   │   ├── globals.css         # Estilos globales y paleta corporativa
+│   │   ├── layout.tsx          # Layout principal con Header y Footer
+│   │   └── page.tsx            # Dashboard y máquina de estados
+│   ├── components/
+│   │   ├── FileDropzone.tsx    # Carga de archivos y validación
+│   │   ├── Header.tsx          # Cabecera con estado de la API
+│   │   ├── JobHistory.tsx      # Historial de comparativos recientes
+│   │   ├── JobProgress.tsx     # Stepper de avance y polling
+│   │   └── JobSuccess.tsx      # Tarjeta de descarga de resultado
+│   ├── lib/
+│   │   └── api.ts              # Cliente HTTP para llamadas al backend
+│   └── types/
+│       └── index.ts            # Interfaces TypeScript
+├── tailwind.config.ts          # Extensión de colores corporativos
+└── package.json
+```
