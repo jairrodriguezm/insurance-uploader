@@ -58,7 +58,7 @@ export function JobSuccess({
         </div>
         <div>
           <span className="text-slate-400 block text-[11px]">Almacenamiento</span>
-          <span className="font-semibold text-slate-800">Supabase Storage</span>
+          <span className="font-semibold text-slate-800">Almacenamiento en la nube</span>
         </div>
       </div>
 

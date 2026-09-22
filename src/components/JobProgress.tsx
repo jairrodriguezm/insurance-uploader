@@ -63,7 +63,7 @@ export function JobProgress({
     {
       id: 5,
       title: "Almacenamiento en nube",
-      desc: "Publicando archivo en Supabase Storage",
+      desc: "Publicando archivo en almacenamiento seguro",
       icon: FileCheck2,
     },
   ];
