@@ -13,7 +13,12 @@ import {
 } from "lucide-react";
 
 interface FileDropzoneProps {
-  onSubmit: (params: { files: File[]; processId: string; tomador: string }) => void;
+  onSubmit: (params: {
+    files: File[];
+    processId: string;
+    tomador: string;
+    categoria: string;
+  }) => void;
   disabled?: boolean;
   isUploading?: boolean;
 }
@@ -26,6 +31,7 @@ export function FileDropzone({
   const [files, setFiles] = useState<File[]>([]);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [categoria, setCategoria] = useState<string>("Hogar");
 
   // Generar ID de proceso sugerido
   const [processId, setProcessId] = useState<string>(() => {
@@ -117,7 +123,12 @@ export function FileDropzone({
     }
 
     setErrorMessage(null);
-    onSubmit({ files, processId: processId.trim(), tomador: tomador.trim() });
+    onSubmit({
+      files,
+      processId: processId.trim(),
+      tomador: tomador.trim(),
+      categoria,
+    });
   };
 
   return (
@@ -245,8 +256,28 @@ export function FileDropzone({
         </div>
       )}
 
-      {/* Campos de metadatos opcionales */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {/* Campos de metadatos */}
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div>
+          <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+            Tipo de Cotización <span className="text-rose-500">*</span>
+          </label>
+          <select
+            value={categoria}
+            onChange={(e) => setCategoria(e.target.value)}
+            disabled={disabled || isUploading}
+            className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-medium text-slate-800 focus:ring-2 focus:ring-corporate-500 focus:border-corporate-500 outline-none transition bg-white"
+          >
+            <option value="Hogar">Hogar</option>
+            <option value="Autos">Autos</option>
+            <option value="Copropiedades">Copropiedades</option>
+            <option value="Todo_Riesgo_Construccion">Todo riesgo construcción</option>
+          </select>
+          <p className="text-[11px] text-slate-400 mt-1">
+            Orienta las coberturas y layout al ramo.
+          </p>
+        </div>
+
         <div>
           <label className="block text-xs font-semibold text-slate-700 mb-1.5">
             ID de Proceso / Radicado <span className="text-rose-500">*</span>
@@ -261,7 +292,7 @@ export function FileDropzone({
             required
           />
           <p className="text-[11px] text-slate-400 mt-1">
-            Identificador único para el archivo y trazabilidad.
+            Identificador único para trazabilidad.
           </p>
         </div>
 
@@ -278,7 +309,7 @@ export function FileDropzone({
             className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-corporate-500 focus:border-corporate-500 outline-none transition"
           />
           <p className="text-[11px] text-slate-400 mt-1">
-            Si se omite, la celda TOMADOR quedará vacía en el Word.
+            Si se omite, se extraerá de las cotizaciones.
           </p>
         </div>
       </div>

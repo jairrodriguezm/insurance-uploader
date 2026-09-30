@@ -38,11 +38,13 @@ export async function createComparativeJob(params: {
   processId: string;
   tomador?: string;
   callbackUrl?: string;
+  categoria?: string;
 }): Promise<JobResponse> {
   const formData = new FormData();
   formData.append("process_id", params.processId);
   formData.append("callback_url", params.callbackUrl || "");
   formData.append("tomador", params.tomador || "");
+  formData.append("categoria", params.categoria || "Todo_Riesgo_Construccion");
 
   for (const file of params.files) {
     formData.append("files", file, file.name);

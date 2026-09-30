@@ -5,6 +5,7 @@ import { CheckCircle2, Download, FileText, RotateCcw } from "lucide-react";
 interface JobSuccessProps {
   jobId: string;
   processId: string;
+  categoria?: string;
   downloadUrl: string;
   filesCount: number;
   onReset: () => void;
@@ -13,6 +14,7 @@ interface JobSuccessProps {
 export function JobSuccess({
   jobId,
   processId,
+  categoria,
   downloadUrl,
   filesCount,
   onReset,
@@ -46,8 +48,16 @@ export function JobSuccess({
           <span className="font-semibold text-slate-800">{processId}</span>
         </div>
         <div>
-          <span className="text-slate-400 block text-[11px]">Identificador de Job</span>
-          <span className="font-mono text-slate-800">{jobId.slice(0, 12)}...</span>
+          <span className="text-slate-400 block text-[11px]">Tipo de Cotización</span>
+          <span className="font-semibold text-corporate-700">
+            {categoria ? categoria.replace(/_/g, " ") : "General"}
+          </span>
+        </div>
+        <div>
+          <span className="text-slate-400 block text-[11px]">ID de Trabajo</span>
+          <span className="font-mono text-slate-700 text-[10px]" title={jobId}>
+            {jobId.slice(0, 13)}...
+          </span>
         </div>
         <div>
           <span className="text-slate-400 block text-[11px]">Formato Generado</span>
@@ -55,10 +65,6 @@ export function JobSuccess({
             <FileText className="w-3.5 h-3.5 text-blue-600 inline" />
             <span>Microsoft Word (.docx)</span>
           </span>
-        </div>
-        <div>
-          <span className="text-slate-400 block text-[11px]">Almacenamiento</span>
-          <span className="font-semibold text-slate-800">Almacenamiento en la nube</span>
         </div>
       </div>
 

@@ -45,6 +45,11 @@ export function JobHistory({ items, onClear }: JobHistoryProps) {
                   <span className="text-xs font-bold text-slate-800 truncate">
                     {item.processId}
                   </span>
+                  {item.categoria && (
+                    <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-corporate-50 border border-corporate-200 text-corporate-700">
+                      {item.categoria.replace(/_/g, " ")}
+                    </span>
+                  )}
                   {item.tomador && (
                     <span className="text-[11px] text-slate-500 font-medium truncate">
                       • {item.tomador}

@@ -18,10 +18,17 @@ export interface HealthResponse {
   version: string;
 }
 
+export type InsuranceCategory =
+  | "Todo_Riesgo_Construccion"
+  | "Hogar"
+  | "Autos"
+  | "Copropiedades";
+
 export interface ComparisonHistoryItem {
   id: string;
   processId: string;
   tomador?: string;
+  categoria?: string;
   createdAt: string;
   fileNames: string[];
   downloadUrl?: string | null;

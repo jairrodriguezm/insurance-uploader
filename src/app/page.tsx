@@ -18,6 +18,7 @@ export default function Home() {
   const [jobId, setJobId] = useState<string | null>(null);
   const [processId, setProcessId] = useState<string>("");
   const [tomador, setTomador] = useState<string>("");
+  const [categoria, setCategoria] = useState<string>("Hogar");
   const [filesCount, setFilesCount] = useState<number>(0);
   const [fileNames, setFileNames] = useState<string[]>([]);
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
@@ -42,6 +43,7 @@ export default function Home() {
       id: jobId || Date.now().toString(),
       processId,
       tomador: tomador || undefined,
+      categoria,
       createdAt: new Date().toLocaleDateString("es-CO", {
         day: "2-digit",
         month: "short",
@@ -79,11 +81,13 @@ export default function Home() {
     files: File[];
     processId: string;
     tomador: string;
+    categoria: string;
   }) => {
     setViewState("uploading");
     setErrorMessage(null);
     setProcessId(params.processId);
     setTomador(params.tomador);
+    setCategoria(params.categoria);
     setFilesCount(params.files.length);
     setFileNames(params.files.map((f) => f.name));
 
@@ -92,6 +96,7 @@ export default function Home() {
         files: params.files,
         processId: params.processId,
         tomador: params.tomador,
+        categoria: params.categoria,
       });
 
       setJobId(response.job_id);
@@ -181,6 +186,7 @@ export default function Home() {
         <JobSuccess
           jobId={jobId}
           processId={processId}
+          categoria={categoria}
           downloadUrl={downloadUrl}
           filesCount={filesCount}
           onReset={handleReset}
